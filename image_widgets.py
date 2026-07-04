@@ -19,3 +19,18 @@ class ImageOutput(Canvas):
     super().__init__(master = parent, background = BACKGROUND_COLOUR, bd = 0, highlightthickness = 0, relief = 'ridge')
     self.grid(row = 0, column = 1, sticky = 'nsew')
     self.bind('<Configure>', resize_image)
+
+class CloseOutput(ctk.CTkButton):
+  def __init__(self, parent, close_func):
+    super().__init__(
+      master = parent, 
+      command = close_func,
+      text = 'X', 
+      text_color = WHITE, 
+      fg_color = 'transparent', 
+      width = 40, 
+      height = 40,
+      corner_radius = 0,
+      hover_color = CLOSE_ORANGE
+    )
+    self.place(relx = 0.99, rely = 0.01, anchor = 'ne')
