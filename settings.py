@@ -14,5 +14,5 @@ WHITE = '#ffffff'
 GREY = 'grey'
 BLUE = '#1f6aa5'
 DARK_GREY = '#4a4a4a'
-CLOSE_ORANGE = '#ff4500'
+CLOSE_ORANGE = "#355F9B"
 SLIDER_BG = '#64686b'

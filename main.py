@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from image_widgets import *
 from PIL import Image, ImageTk
+from menu import Menu
 
 class App(ctk.CTk):
   def __init__(self):
@@ -10,8 +11,8 @@ class App(ctk.CTk):
     self.title('Eikon')
     self.minsize(800, 500)
     self.rowconfigure(0, weight = 1)
-    self.columnconfigure(0, weight = 2)
-    self.columnconfigure(1, weight = 6)
+    self.columnconfigure(0, weight = 2, uniform = 'a')
+    self.columnconfigure(1, weight = 6, uniform = 'a')
     self.image_import = ImageImport(self, self.import_image)
     self.mainloop()
 
@@ -19,13 +20,16 @@ class App(ctk.CTk):
     self.image = Image.open(path)
     self.image_ratio = self.image.size[0] / self.image.size[1]
     self.image_tk = ImageTk.PhotoImage(self.image)
+    
     self.image_import.grid_forget()
     self.image_output = ImageOutput(self, self.resize_image)
     self.close_button = CloseOutput(self, self.close_edit)
+    self.menu = Menu(self)
 
   def close_edit(self):
     self.image_output.grid_forget()
     self.close_button.place_forget()
+    self.menu.grid_forget()
     self.image_import = ImageImport(self, self.import_image)
 
   def resize_image(self, event):
