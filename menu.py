@@ -1,9 +1,10 @@
 import customtkinter as ctk
+from panels import *
 
 class Menu(ctk.CTkTabview):
   def __init__(self, parent):
     super().__init__(master = parent)
-    self.grid(row = 0, column = 0, sticky = 'nsew')
+    self.grid(row = 0, column = 0, sticky = 'nsew', pady = 10, padx = 10)
 
     self.add('Position')
     self.add('Colour')
@@ -15,10 +16,13 @@ class Menu(ctk.CTkTabview):
 
 class PositionFrame(ctk.CTkFrame):
   def __init__(self, parent):
-    super().__init__(master = parent, fg_color = 'blue')
-    self.pack(expand = True, fill = 'transparent')
+    super().__init__(master = parent, fg_color = 'transparent')
+    self.pack(expand = True, fill = 'both')
+
+    SliderPanel(self, 'Rotation')  
+    SliderPanel(self, 'Zoom')  
 
 class ColourFrame(ctk.CTkFrame):
   def __init__(self, parent):
-    super().__init__(master = parent, fg_color = 'green')
-    self.pack(expand = True, fill = 'transparent')
+    super().__init__(master = parent, fg_color = 'transparent')
+    self.pack(expand = True, fill = 'both')
