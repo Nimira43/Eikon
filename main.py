@@ -25,16 +25,19 @@ class App(ctk.CTk):
     self.mainloop()
 
   def init_parameters(self):
-    self.rotate_float = ctk.DoubleVar(value = ROTATE_DEFAULT)
-    self.zoom_float = ctk.DoubleVar(value = ZOOM_DEFAULT)
+    self.pos_vars = {
+      'rotate': ctk.DoubleVar(value = ROTATE_DEFAULT),
+      'zoom': ctk.DoubleVar(value = ZOOM_DEFAULT),
+      'flip': ctk.StringVar(value = FLIP_OPTIONS[0]),
+    }
 
-    self.rotate_float.trace('w', self.manipulate_image)
-    self.zoom_float.trace('w', self.manipulate_image)
+    for var in self.pos_vars.values():
+      var.trace('w', self.manipulate_image)
 
   def manipulate_image(self, *args):
     self.image = self.original
-    self.image = self.image.rotate(self.rotate_float.get())
-    self.image = ImageOps.crop(image = self.image, border = self.zoom_float.get())
+    self.image = self.image.rotate(self.pos_vars['rotate'].get())
+    self.image = ImageOps.crop(image = self.image, border = self.pos_vars['zoom'].get())
     
     self.place_image()
 
@@ -47,7 +50,7 @@ class App(ctk.CTk):
     self.image_import.grid_forget()
     self.image_output = ImageOutput(self, self.resize_image)
     self.close_button = CloseOutput(self, self.close_edit)
-    self.menu = Menu(self, self.rotate_float, self.zoom_float)
+    self.menu = Menu(self, self.pos_vars)
 
   def close_edit(self):
     self.image_output.grid_forget()
