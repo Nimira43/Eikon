@@ -31,7 +31,22 @@ class App(ctk.CTk):
       'flip': ctk.StringVar(value = FLIP_OPTIONS[0]),
     }
 
-    for var in self.pos_vars.values():
+    self.colour_vars = {
+      'brightness': ctk.DoubleVar(value = BRIGHTNESS_DEFAULT),
+      'greyscale': ctk.BooleanVar(value = GREYSCALE_DEFAULT),
+      'invert': ctk.BooleanVar(value = INVERT_DEFAULT),
+      'vibrance': ctk.DoubleVar(value = VIBRANCE_DEFAULT)
+    }
+
+    self.effect_vars = {
+      'blur': ctk.DoubleVar(value = BLUR_DEFAULT),
+      'contrast': ctk.IntVar(value = CONTRAST_DEFAULT),
+      'effect': ctk.StringVar(value = EFFECT_OPTIONS[0]),      
+    }
+
+    combined_vars = list(self.pos_vars.values()) + list(self.colour_vars.values()) + list(self.effect_vars.values())
+
+    for var in combined_vars:
       var.trace('w', self.manipulate_image)
 
   def manipulate_image(self, *args):
@@ -50,7 +65,7 @@ class App(ctk.CTk):
     self.image_import.grid_forget()
     self.image_output = ImageOutput(self, self.resize_image)
     self.close_button = CloseOutput(self, self.close_edit)
-    self.menu = Menu(self, self.pos_vars)
+    self.menu = Menu(self, self.pos_vars, self.colour_vars, self.effect_vars)
 
   def close_edit(self):
     self.image_output.grid_forget()
