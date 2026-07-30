@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from image_widgets import *
-from PIL import Image, ImageTk, ImageOps
+from PIL import Image, ImageTk, ImageOps, ImageEnhance
 from menu import Menu
 
 class App(ctk.CTk):
@@ -53,6 +53,21 @@ class App(ctk.CTk):
     self.image = self.original
     self.image = self.image.rotate(self.pos_vars['rotate'].get())
     self.image = ImageOps.crop(image = self.image, border = self.pos_vars['zoom'].get())
+
+    if self.pos_vars['flip'].get() == 'X':
+      self.image = ImageOps.mirror(self.image)
+
+    if self.pos_vars['flip'].get() == 'Y':
+      self.image = ImageOps.flip(self.image)
+      
+    if self.pos_vars['flip'].get() == 'Both':
+      self.image = ImageOps.flip(self.image)
+      self.image = ImageOps.mirror(self.image)
+
+    brightness_enhancer = ImageEnhance.Brightness(self.image)
+    self.image = brightness_enhancer.enhance(self.colour_vars['brightness'].get())
+    vibrance_enhancer = ImageEnhance.Color(self.image)
+    self.image = vibrance_enhancer.enhance(self.colour_vars['vibrance'].get())
     
     self.place_image()
 
